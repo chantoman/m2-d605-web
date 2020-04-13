@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:faces="http://www.springframework.org/schema/faces"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+      http://www.springframework.org/schema/webflow-config
+      http://www.springframework.org/schema/webflow-config/spring-webflow-config.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.1.xsd
+      http://www.springframework.org/schema/util
+      http://www.springframework.org/schema/util/spring-util-4.1.xsd
+      http://www.springframework.org/schema/faces
+      http://www.springframework.org/schema/faces/spring-faces.xsd">
+      
+      
+<!-- 	<bean name="jsfUtils" class="com.cgp.fwk.web.jsf.JsfUtils"/> -->
+	
+	
+
+
+	<faces:resources />
+<!-- 	<bean id="facesUserSessionManager" class="com.cgp.fwk.web.jsf.FacesUserSessionManager" /> -->
+
+	<!-- Maps logical view names to Facelet templates (e.g. 'search' to '/faces/search.xhtml' -->
+	<bean id="faceletsViewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.faces.mvc.JsfView" />
+		<property name="prefix" value="/templates/" />
+		<property name="suffix" value=".html" />
+	</bean>
+
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+	<bean id="flowController" class="org.springframework.webflow.mvc.servlet.FlowController">
+		<property name="flowExecutor" ref="flowExecutor" />
+		<property name="ajaxHandler">
+			<bean class="org.springframework.faces.webflow.JsfAjaxHandler" />
+		</property>
+	</bean>
+
+	<webflow:flow-executor id="flowExecutor">
+		<webflow:flow-execution-repository
+			max-execution-snapshots="0" max-executions="0" />
+		<webflow:flow-execution-listeners>
+			<webflow:listener ref="facesContextListener" />
+			<webflow:listener ref="securityFlowExecutionListener" />
+		</webflow:flow-execution-listeners>
+		<webflow:flow-execution-attributes>
+        	<webflow:redirect-in-same-state value="true"/>
+        </webflow:flow-execution-attributes>
+	</webflow:flow-executor>
+
+	<!-- Installs a listener that creates and releases the FacesContext for 
+		each request. -->
+	<bean id="facesContextListener" class="org.springframework.faces.webflow.FlowFacesContextLifecycleListener" />
+	<!-- Installs a listener to apply Spring Security authorities -->
+	<bean id="securityFlowExecutionListener"
+		class="org.springframework.webflow.security.SecurityFlowExecutionListener">
+		<!-- <property name="accessDecisionManager" ref="customAccessDecisionManagerBean" /> -->
+	</bean>
+
+
+	<webflow:flow-registry id="flowRegistry"
+		flow-builder-services="flowBuilderServices">
+		<webflow:flow-location-pattern value="classpath*:/flows/**/*.xml" />
+
+	</webflow:flow-registry>
+
+	<faces:flow-builder-services id="flowBuilderServices" />
+
+
+	<!-- Maps request URIs to controllers -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<value>
+				/*=flowController
+			</value>
+		</property>
+		<property name="defaultHandler">
+			<!-- Selects view names to render based on the request URI: e.g. /main 
+				selects "main" -->
+			<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
+		</property>
+	</bean>
+	
+<!-- 	<bean id="webFlowHelper" class="com.cgp.fwk.web.jsf.webflow.WebFlowHelper"> -->
+<!-- 		<constructor-arg index="0" ref="flowExecutor" /> -->
+<!-- 		<constructor-arg index="1" type="java.lang.String" -->
+<!-- 			value="240" /> -->
+<!-- 		<constructor-arg index="2" type="java.lang.String" -->
+<!-- 			value="-1" /> -->
+<!-- 	</bean> -->
+
+
+</beans>

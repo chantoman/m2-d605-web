@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+     <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}">
+    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/resources/css/all.css}">
+    <link th:href="@{/resources/css/app.css}"  rel="stylesheet" />
+     <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script th:src="@{/resources/js/jquery-3.4.1.slim.min.js}" ></script>
+    <script th:src="@{/resources/js/popper.min.js}" ></script>
+    <script th:src="@{/resources/js/bootstrap.min.js}" ></script>
+    <script th:src="@{/resources/js/app.js}"></script>
+    <title>Connexion</title>
+</head>
+
+<body>
+<!-- Sidebar -->
+		 <div th:replace="fragments/side_bar :: sidebar">
+		 </div>  
+	<div class="wrapper">
+	
+	     
+	
+	    <!-- Page Content -->
+	    <div  class="container my-4" layout:fragment="content">
+	    </div>
+		<!-- Modal -->
+
+	</div>   
+
+    
+</body>
+</html>

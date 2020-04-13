@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="#{role.title.list}"></title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+	<h2 th:text="#{role.title.list}" class="border border-primary rounded text-center"></h2>
+		<table class="table table-striped table-hover table-sm my-5">
+			<thead>
+				<tr>
+					<th scope="col"></th>
+					<th scope="col" th:text="#{role.name}"></th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="bean,iter : ${allBeans}">
+					<th scope="row" th:text="${{iter.index+1}}"></th>
+					<td th:text="${{bean.name}}"></td>
+					<td>
+					    <a class="btn" th:href="@{/role(id=${bean.extref})}" ><i class="fa fa-edit"></i></a>
+						<a class="btn" role="button" data-toggle="modal" data-target="#confirmModal"  th:data-actionurl="@{${'/roles/delete/'+bean.extref}}"><i class="fa fa-trash-alt"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="container text-center ">
+			<a th:href="@{/role}" class="btn btn-primary" role="button" aria-pressed="true">Ajouter</a>
+		</div>
+		<div th:replace="fragments/modals :: confirmModal">
+		</div>
+	</div>
+	
+</body>
+</html>

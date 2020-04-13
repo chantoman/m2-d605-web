@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+      <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}">
+    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/resources/css/all.css}">
+    <link th:href="@{/resources/css/app.css}"  rel="stylesheet" />
+    <title>Connexion</title>
+
+</head>
+
+<body id="idLoginBody">
+    <div id="logreg-forms">
+        <form method="POST" th:action="@{/loginProcess}" class="form-signin">
+            <div id="logdoUniv" > </div>
+            <br/>
+            <input type="text" name="username" class="form-control" placeholder="Identifiant" required="" autofocus="">
+            <input type="password" name="password" class="form-control" placeholder="Mot de passe" required="">
+            
+            <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> SE CONNECTER</button>
+            <a href="#" id="forgot_pswd">Mot de passe oublié?</a>
+            <hr>
+            <!-- <p>Don't have an account!</p>  -->
+            <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Inscription</button>
+         </form>
+
+            <br>
+            
+    </div>
+      <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script th:src="@{/resources/js/jquery-3.4.1.slim.min.js}" ></script>
+    <script th:src="@{/resources/js/popper.min.js}" ></script>
+    <script th:src="@{/resources/js/bootstrap.min.js}" ></script>
+    <script th:src="@{/resources/js/app.js}"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary"
+	th:fragment="sidebar">
+	<a id="logo" class="navbar-brand" href="#">UPJV</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarNav" aria-controls="navbarNav"
+		aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class=" container collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav mr-auto">
+
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+				role="button" aria-haspopup="true" aria-expanded="false"
+				th:text="#{'menu.security'}"></a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" th:href="@{/users}" th:text="#{'menu.users'}"></a>
+					<a class="dropdown-item" th:href="@{/roles}" th:text="#{'menu.roles'}"></a>
+					<div role="separator" class="dropdown-divider"></div>
+				</div>
+			</li>
+			
+		</ul>
+	</div>
+</nav>

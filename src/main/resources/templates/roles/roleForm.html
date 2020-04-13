@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:form="http://www.springframework.org/tags/form">
+<head>
+<title th:text="#{${'role.title.'+action}}"></title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<h2 th:text="#{${'role.title.'+action}}" class="border border-primary rounded text-center"></h2>
+		<form method="post" th:object="${bean}" th:action="${flowExecutionUrl}" >
+		  <div class="form-group">
+		    <label for="name" th:text="#{role.name}"></label>
+		    <input type="text" class="form-control" id="name" th:field="*{name}" th:errorclass="fieldError" >
+		    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
+		  </div>
+		   <div class="text-center ">
+			  <button type="submit" class="btn btn-primary" th:name="${'_eventId_'+action}" th:text="#{action.submit}"></button>
+			  <button type="submit" class="btn btn-primary" name="_eventId_cancel" th:text="#{action.close}"></button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

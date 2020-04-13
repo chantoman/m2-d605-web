@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+
+	<input name="id" />
+
+	<decision-state id="createOrEdit">
+		<if test="id == null" then="create" else="edit" />
+	</decision-state>
+
+	<action-state id="create">
+		<set name="flowScope.user" value="userController.createNew()"></set>
+		<transition to="userView" />
+	</action-state>
+
+	<action-state id="edit">
+		<set name="flowScope.user" value="userController.findById(id)"></set>
+		<transition to="userView" />
+	</action-state>
+
+	<view-state id="userView" model="user" view="/users/userForm">
+		<on-entry>
+			<set name="flowScope.action" value="id==null?'save':'update'"></set>
+		</on-entry>
+		<transition on="save" to="createOrEdit">
+			<evaluate expression="userController.save(user, messageContext)" />
+			<set name="flowScope.message" value="'SUCCESS'" />
+			<render fragments="content" />
+		</transition>
+		<transition on="update" to="createOrEdit">
+			<evaluate expression="userController.update(user, messageContext)" />
+			<set name="flowScope.message" value="'SUCCESS'" />
+			<render fragments="content" />
+		</transition>
+		<transition on="cancel" to="finish" validate="false"></transition>
+		<transition on-exception="feign.FeignException.Conflict" to="userView">
+			<evaluate
+				expression="messageContext.addMessage(new org.springframework.binding.message.MessageBuilder().error().source('login').code('user.duplicate.login').build())" />
+		</transition>
+		<transition on-exception="fr.u.picardie.m2.d605.web.exception.ServiceException" to="userView">
+			<set name="flowScope.message" value="'ERROR'" />
+		</transition>
+	</view-state>
+	<end-state id="finish" view="externalRedirect:users">
+	</end-state>
+
+
+</flow>

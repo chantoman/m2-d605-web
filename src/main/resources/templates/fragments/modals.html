@@ -1,0 +1,43 @@
+<!-- Modal -->
+<div th:fragment="confirmModal" class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirm-title">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="confirm-body">
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-secondary" data-dismiss="modal">Non</a>
+        <a id="yes"  class="btn btn-primary yes" href="#" >Oui</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:fragment="resultModal" class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resultModalLongTitle" th:text="#{${action+'.title.'+message}}"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      		<div th:switch="${message}">
+				<div th:case="'SUCCESS'" class="alert alert-success" th:text="#{${action+'.msg.'+message}}">
+				</div>
+				<div th:case="'ERROR'" class="alert alert-danger" th:text="#{${action+'.msg.'+message}}">
+				</div>
+			</div>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-secondary" data-dismiss="modal" th:text="#{close}">Fermer</a>
+      </div>
+    </div>
+  </div>
+</div>

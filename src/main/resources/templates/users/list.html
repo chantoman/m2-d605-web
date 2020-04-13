@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Liste utilisateurs</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+	<h2 th:text="#{user.title.list}" class="border border-primary rounded text-center"></h2>
+		<table class="table table-striped table-hover table-sm my-5">
+			<thead>
+				<tr>
+					<th scope="col"></th>
+					<th scope="col" th:text="#{user.login}"></th>
+					<th scope="col" th:text="#{user.firstName}"></th>
+					<th scope="col" th:text="#{user.lastName}"></th>
+					<th scope="col" th:text="#{user.email}"></th>
+					<th scope="col" th:text="#{user.enabled}"></th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="usr,iter : ${allUsers}">
+					<th scope="row" th:text="${{iter.index+1}}"></th>
+					<td th:text="${{usr.login}}"></td>
+					<td th:text="${{usr.lastName}}"></td>
+					<td th:text="${{usr.firstName}}"></td>
+					<td th:text="${{usr.email}}"></td>
+					<td th:text="#{${'user.enabled.'+!usr.enabled}}"></td>
+					<td>
+					    <a class="btn" th:href="@{/user(id=${usr.extref})}" ><i class="fa fa-edit"></i></a>
+						<a class="btn" role="button" data-toggle="modal" data-target="#confirmModal"  th:data-actionurl="@{${'/users/delete/'+usr.extref}}" th:data-confirmtitle="#{user.delete.confirm.title}" th:data-confirmbody="#{user.delete.confirm.body}"><i class="fa fa-trash-alt"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="text-center ">
+			<a th:href="@{/user}" class="btn btn-primary" role="button" aria-pressed="true">Ajouter</a>
+		</div>
+		<div th:replace="fragments/modals :: confirmModal">
+		</div>
+	</div>
+	
+</body>
+</html>
